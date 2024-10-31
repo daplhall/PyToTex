@@ -15,7 +15,7 @@ class TestFilehandler(unittest.TestCase):
 
     def test_OpenMainTex(self):
         with self.assertNotRaises(FileNotFoundError):
-            with texhandler.TexHandler():
+            with texhandler.TexHandler('./tests/Tex'):
                 pass
 
 
