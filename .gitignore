@@ -3,3 +3,6 @@
 .vscode/
 dist/
 **/Tex/
+*.pdf
+aux/
+build/

@@ -1,5 +1,6 @@
 import os
 import matplotlib.pyplot as plt
+from numpy import ndarray
 
 class TexHandler():
     """
@@ -26,21 +27,73 @@ class TexHandler():
         self._filehandlers = []
     
     def __enter__(self):
+        ## This could be split into a sub folder, one where you write it as a class to be compiled and one where you just write a tex file with out begin document and such
         maintex = open(self._texdir + "/main.tex",'w')
-        self._filehandlers.append(maintex)
         self._currentFile = maintex
+        self._mainhandler = maintex
+        self._mainhandler.write(
+            r"\documentclass{article}"'\n'
+        )
+        ## TODO write packages
+        self._mainhandler.write(
+            r"\begin{document}"'\n'
+        )
+        ## TODO write the header into the main.tex
+        return self
 
     def __exit__(self, exc_type, exc_value, exc_traceback):
         for filehanlder in self._filehandlers:
             # TODO  add that files are added to input as main.tex
             filehanlder.close()
+        self._mainhandler.write(
+            r"\end{document}"'\n'
+        )
+        self._mainhandler.close()
 
     @classmethod
     def with_packages(cls, file):
         pass
     
     def write_table(self, data, file = None):
-        pass
+        """
+        Assumes the structure is NxM
+        so for a list its
+        [[1,2,3]
+         [4,5,6]
+        ] 
+        the same for numpy
+        for now we ignore header.
+        """
+        
+        if isinstance(data, ndarray):
+            return
+        else:
+            N = len(data)
+            M, Mtemp = 0,0
+            for row in data:
+                Mtemp = len(row)
+                if Mtemp > M:
+                    M = Mtemp
+        ## find max dimmensions, if its a ndarray or pandas then use shortcuts
+        self._mainhandler.write(
+            r"\begin{table}[h]"'\n'
+            '\t'r"\centering"'\n'
+            '\t'r"\begin{tabular}{"
+        )
+        for j in range(M):
+            self._mainhandler.write("c|" if j != M - 1 else r"c}"'\n')
+        self._mainhandler.write("\t\t"r"\hline\hline"'\n')
+        # TODO write {c|c|c|c} depending on the max number of collumsn in data
+        for row in data:
+            self._mainhandler.write("\t\t")
+            for j, element in enumerate(row):
+                self._mainhandler.write(f"{element:.0f}" if element%1 == 0 else f"{element:.2f}"                )
+                self._mainhandler.write(" & " if j != M - 1 else r" \\"'\n')
+            self._mainhandler.write("\t\t"r"\hline"'\n')  
+        self._mainhandler.write(
+            '\t'r"\end{tabular}"'\n'
+            r"\end{table}"'\n'
+        )
 
     def write_plot(self, fig:plt.figure, file = None):
         pass

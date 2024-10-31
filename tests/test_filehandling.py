@@ -14,8 +14,11 @@ class TestFilehandler(unittest.TestCase):
 
 
     def test_OpenMainTex(self):
+        """
+            testing if the opening and closing works 
+        """
         with self.assertNotRaises(FileNotFoundError):
-            with texhandler.TexHandler('./tests/Tex'):
+            with texhandler.TexHandler('./tests/Tex') as th:
                 pass
 
 
