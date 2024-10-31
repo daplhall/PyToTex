@@ -1,3 +1,6 @@
+import sys
+sys.path.append("./PyToTex")
+
 import unittest
 import numpy as np
 import pandas as pd
@@ -222,7 +225,7 @@ class TestWriteTable(unittest.TestCase):
         )
         self.assertEqual(f, answer)
 
-    def test_TableFromNumpy1D(self):
+    def test_TableFromNumpy1DRow(self):
         """
             tests if we can write a table from a 1D numpy array (assumed by code as a row)
         """
@@ -238,6 +241,37 @@ class TestWriteTable(unittest.TestCase):
             '\t'r"\begin{tabular}{c|c|c|c|c}"'\n'
             '\t\t'r"\hline\hline"'\n'
             '\t\t'r"1 & 2 & 3 & 4 & 5 \\"'\n'
+            '\t\t'r"\hline"'\n'
+            '\t'r"\end{tabular}"'\n'
+            r"\end{table}"'\n'
+            r"\end{document}"'\n'
+        )
+        self.assertEqual(f, answer)
+
+    def test_TableFromNumpy1DColmn(self):
+        """
+            tests if we can write a table from a 1D numpy array (assumed by code as a row)
+        """
+        with TexHandler('./tests/Tex') as th:
+            list = np.array([[1],[2],[3],[4],[5]])
+            th.write_table(list) 
+        f = open('./tests/Tex/main.tex','r').read()
+        answer = (
+            r"\documentclass{article}"'\n'
+            r"\begin{document}"'\n'
+            r"\begin{table}[h]"'\n'
+            '\t'r"\centering"'\n'
+            '\t'r"\begin{tabular}{c}"'\n'
+            '\t\t'r"\hline\hline"'\n'
+            '\t\t'r"1 \\"'\n'
+            '\t\t'r"\hline"'\n'
+            '\t\t'r"2 \\"'\n'
+            '\t\t'r"\hline"'\n'
+            '\t\t'r"3 \\"'\n'
+            '\t\t'r"\hline"'\n'
+            '\t\t'r"4 \\"'\n'
+            '\t\t'r"\hline"'\n'
+            '\t\t'r"5 \\"'\n'
             '\t\t'r"\hline"'\n'
             '\t'r"\end{tabular}"'\n'
             r"\end{table}"'\n'
