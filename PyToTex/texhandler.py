@@ -56,19 +56,13 @@ class TexHandler():
     
     def write_table(self, data, file = None):
         """
-        Assumes the structure is NxM
-        so for a list its
-        [[1,2,3]
-         [4,5,6]
-        ] 
-        the same for numpy
-        for now we ignore header.
-        """
-        
+        we assume that 1d numpy arrays are a row
+        """ 
         if isinstance(data, ndarray):
-            return
+            if len(data.shape) == 1:
+                data = data[None,:]
+            _, M = data.shape
         else:
-            N = len(data)
             M, Mtemp = 0,0
             for row in data:
                 Mtemp = len(row)
@@ -83,12 +77,14 @@ class TexHandler():
         for j in range(M):
             self._mainhandler.write("c|" if j != M - 1 else r"c}"'\n')
         self._mainhandler.write("\t\t"r"\hline\hline"'\n')
-        # TODO write {c|c|c|c} depending on the max number of collumsn in data
         for row in data:
+            K = len(row)
             self._mainhandler.write("\t\t")
             for j, element in enumerate(row):
-                self._mainhandler.write(f"{element:.0f}" if element%1 == 0 else f"{element:.2f}"                )
-                self._mainhandler.write(" & " if j != M - 1 else r" \\"'\n')
+                self._mainhandler.write(f"{element:.0f}" if element%1 == 0 else f"{element:.2f}")
+                self._mainhandler.write(" & " if j != K - 1 else '')
+                if j == K-1:
+                    self._mainhandler.write(r" \\"'\n')
             self._mainhandler.write("\t\t"r"\hline"'\n')  
         self._mainhandler.write(
             '\t'r"\end{tabular}"'\n'
