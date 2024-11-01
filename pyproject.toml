@@ -22,3 +22,9 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/daplhall/PyToTex"
 Issues = "https://github.com/daplhall/PyToTex/issues"
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "PyToTex/*",
+  "tests/*"
+]
