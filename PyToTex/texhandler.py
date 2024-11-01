@@ -1,6 +1,7 @@
 import os
 import matplotlib.pyplot as plt
 from numpy import ndarray
+from pandas import DataFrame, Index
 
 class TexHandler():
     """
@@ -58,12 +59,20 @@ class TexHandler():
         """
         we assume that 1d numpy arrays are a row
         """ 
+        header = ()
+        if isinstance(data, DataFrame):
+            header = data.keys()
+            data = data.values
+        elif isinstance(data, dict):
+            header = data.keys()
+            data = list(data.values())
+        K = len(header)
         if isinstance(data, ndarray):
             if len(data.shape) == 1:
                 data = data[None,:]
             _, M = data.shape
         else:
-            M, Mtemp = 0,0
+            M, Mtemp = K, 0
             for row in data:
                 Mtemp = len(row)
                 if Mtemp > M:
@@ -76,12 +85,17 @@ class TexHandler():
         )
         for j in range(M):
             self._mainhandler.write("c|" if j != M - 1 else r"c}"'\n')
+        ## TODO HEADER
+        if (isinstance(header, Index) and not header.empty) or header:
+            self._mainhandler.write("\t\t")
+            for j, colmn in enumerate(header):
+                self._mainhandler.write(colmn + " & " if j != K-1 else colmn+r" \\"'\n')
         self._mainhandler.write("\t\t"r"\hline\hline"'\n')
         for row in data:
             K = len(row)
             self._mainhandler.write("\t\t")
             for j, element in enumerate(row):
-                self._mainhandler.write(f"{element:.0f}" if element%1 == 0 else f"{element:.2f}")
+                self._mainhandler.write(f"{element:.0f}" if element%1 == 0 else f"{element:.2f}") # TODO this might need to be an option such that if you want .2 decimals on all numbers then you should have the option
                 self._mainhandler.write(" & " if j != K - 1 else '')
                 if j == K-1:
                     self._mainhandler.write(r" \\"'\n')

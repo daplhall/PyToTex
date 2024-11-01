@@ -313,8 +313,8 @@ class TestWriteTable(unittest.TestCase):
         """
         with TexHandler('./tests/Tex') as th:
             list = np.array([
-                    [1.123,2.123,3.123,4.123,5.123],
-                    [1.123,2.123,3.123,4.123,5.123]
+                    [1.123,2,3.123,4.123,5.123],
+                    [1.123,2.123,3,4.123,5.123]
                 ])
             th.write_table(list) 
         f = open('./tests/Tex/main.tex','r').read()
@@ -325,9 +325,9 @@ class TestWriteTable(unittest.TestCase):
             '\t'r"\centering"'\n'
             '\t'r"\begin{tabular}{c|c|c|c|c}"'\n'
             '\t\t'r"\hline\hline"'\n'
-            '\t\t'r"1.12 & 2.12 & 3.12 & 4.12 & 5.12 \\"'\n'
+            '\t\t'r"1.12 & 2 & 3.12 & 4.12 & 5.12 \\"'\n'
             '\t\t'r"\hline"'\n'
-            '\t\t'r"1.12 & 2.12 & 3.12 & 4.12 & 5.12 \\"'\n'
+            '\t\t'r"1.12 & 2.12 & 3 & 4.12 & 5.12 \\"'\n'
             '\t\t'r"\hline"'\n'
             '\t'r"\end{tabular}"'\n'
             r"\end{table}"'\n'
@@ -348,7 +348,30 @@ class TestWriteTable(unittest.TestCase):
             for index, row in dataframe.iterrows():
                 print(index, row)
             th.write_table(dataframe)
-        pass
+        f = open('./tests/Tex/main.tex','r').read()
+        answer = (
+            r"\documentclass{article}"'\n'
+            r"\begin{document}"'\n'
+            r"\begin{table}[h]"'\n'
+            '\t'r"\centering"'\n'
+            '\t'r"\begin{tabular}{c|c|c|c|c|c}"'\n'
+            '\t\t'r"A & B & C & D & E & F \\"'\n'
+            '\t\t'r"\hline\hline"'\n'
+            '\t\t'r"1 & 2 & 3 & 4 & 5 & 6 \\"'\n'
+            '\t\t'r"\hline"'\n'
+            '\t\t'r"1 & 2 & 3 & 4 & 5 & 6 \\"'\n'
+            '\t\t'r"\hline"'\n'
+            '\t\t'r"1 & 2 & 3 & 4 & 5 & 6 \\"'\n'
+            '\t\t'r"\hline"'\n'
+            '\t\t'r"1 & 2 & 3 & 4 & 5 & 6 \\"'\n'
+            '\t\t'r"\hline"'\n'
+            '\t\t'r"1 & 2 & 3 & 4 & 5 & 6 \\"'\n'
+            '\t\t'r"\hline"'\n'
+            '\t'r"\end{tabular}"'\n'
+            r"\end{table}"'\n'
+            r"\end{document}"'\n'
+        )
+        self.assertEqual(f, answer)
         
 if __name__ == '__main__':
     unittest.main()
