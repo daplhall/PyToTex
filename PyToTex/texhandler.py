@@ -60,12 +60,14 @@ class TexHandler():
         we assume that 1d numpy arrays are a row
         """ 
         header = ()
+        if isinstance(data, dict):
+            try:
+                data = DataFrame(data)
+            except ValueError as e:
+                raise ValueError("When passing a dict, the elements must be the same size")
         if isinstance(data, DataFrame):
             header = data.keys()
             data = data.values
-        elif isinstance(data, dict):
-            header = data.keys()
-            data = list(data.values())
         K = len(header)
         if isinstance(data, ndarray):
             if len(data.shape) == 1:

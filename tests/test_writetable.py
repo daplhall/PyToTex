@@ -345,8 +345,6 @@ class TestWriteTable(unittest.TestCase):
             "F": [6,6,6,6,6]
         })
         with TexHandler('./tests/Tex') as th:
-            for index, row in dataframe.iterrows():
-                print(index, row)
             th.write_table(dataframe)
         f = open('./tests/Tex/main.tex','r').read()
         answer = (
@@ -372,6 +370,54 @@ class TestWriteTable(unittest.TestCase):
             r"\end{document}"'\n'
         )
         self.assertEqual(f, answer)
+
+    def test_TableFromDict(self):
+        data = {
+            "A": [1,1,1,1,1],
+            "B": [2,2,2,2,2],
+            "C": [3,3,3,3,3],
+            "D": [4,4,4,4,4],
+            "E": [5,5,5,5,5],
+            "F": [6,6,6,6,6]
+        }
+        with TexHandler('./tests/Tex') as th:
+            th.write_table(data)
+        f = open('./tests/Tex/main.tex','r').read()
+        answer = (
+            r"\documentclass{article}"'\n'
+            r"\begin{document}"'\n'
+            r"\begin{table}[h]"'\n'
+            '\t'r"\centering"'\n'
+            '\t'r"\begin{tabular}{c|c|c|c|c|c}"'\n'
+            '\t\t'r"A & B & C & D & E & F \\"'\n'
+            '\t\t'r"\hline\hline"'\n'
+            '\t\t'r"1 & 2 & 3 & 4 & 5 & 6 \\"'\n'
+            '\t\t'r"\hline"'\n'
+            '\t\t'r"1 & 2 & 3 & 4 & 5 & 6 \\"'\n'
+            '\t\t'r"\hline"'\n'
+            '\t\t'r"1 & 2 & 3 & 4 & 5 & 6 \\"'\n'
+            '\t\t'r"\hline"'\n'
+            '\t\t'r"1 & 2 & 3 & 4 & 5 & 6 \\"'\n'
+            '\t\t'r"\hline"'\n'
+            '\t\t'r"1 & 2 & 3 & 4 & 5 & 6 \\"'\n'
+            '\t\t'r"\hline"'\n'
+            '\t'r"\end{tabular}"'\n'
+            r"\end{table}"'\n'
+            r"\end{document}"'\n'
+        )
+        self.assertEqual(f, answer)
         
+    def test_TableFromDictException(self):
+        data = {
+            "A": [1,1,1,1,1],
+            "B": [2,2,2,2,2],
+            "C": [3,3,3,3,3],
+            "D": [4,4,4,4,4],
+            "E": [5,5,5,5,5],
+            "F": [6,6,6,6]
+        }
+        with self.assertRaises(ValueError):
+            with TexHandler('./tests/Tex') as th:
+                th.write_table(data)
 if __name__ == '__main__':
     unittest.main()
