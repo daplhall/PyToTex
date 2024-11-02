@@ -429,7 +429,46 @@ class TestWriteTable(unittest.TestCase):
             [1.123123,2,3,4,5],
             [6,7,8,9,1]
         ]
-        with TexHandler('./tests/Tex', colmnOptions={"headerSeperator": r"\hline\hline\hline", "rowSeperator": r"\hline\hline", 'decimals': 4}) as th:
+        with TexHandler('./tests/Tex', 
+                        colmnOptions={
+                            "headerSeperator": r"\hline\hline\hline", 
+                            "rowSeperator": r"\hline\hline", 
+                            'decimals': 4,
+                            'colmSeperator': False
+                        }
+        ) as th:
+            th.write_table(list)
+        f = open('./tests/Tex/main.tex','r').read()
+        answer = (
+            r"\documentclass{article}"'\n'
+            r"\begin{document}"'\n'
+            r"\begin{table}[h]"'\n'
+            '\t'r"\centering"'\n'
+            '\t'r"\begin{tabular}{ccccc}"'\n'
+            '\t\t'r"\hline\hline\hline"'\n'
+            '\t\t'r"1.1231 & 2 & 3 & 4 & 5 \\"'\n'
+            '\t\t'r"\hline\hline"'\n'
+            '\t\t'r"6 & 7 & 8 & 9 & 1 \\"'\n'
+            '\t\t'r"\hline\hline"'\n'
+            '\t'r"\end{tabular}"'\n'
+            r"\end{table}"'\n'
+            r"\end{document}"'\n'
+        )
+        self.assertEqual(f, answer)
+
+    def test_TableOptionsColmSeperator(self):
+        """
+            testing the table options 
+        """
+        list = [
+            [1.123123,2,3,4,5],
+            [6,7,8,9,1]
+        ]
+        with TexHandler('./tests/Tex', 
+                        colmnOptions={
+                            'colmSeperator': True
+                        }
+        ) as th:
             th.write_table(list)
         f = open('./tests/Tex/main.tex','r').read()
         answer = (
@@ -438,11 +477,11 @@ class TestWriteTable(unittest.TestCase):
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
             '\t'r"\begin{tabular}{c|c|c|c|c}"'\n'
-            '\t\t'r"\hline\hline\hline"'\n'
-            '\t\t'r"1.1231 & 2 & 3 & 4 & 5 \\"'\n'
             '\t\t'r"\hline\hline"'\n'
+            '\t\t'r"1.12 & 2 & 3 & 4 & 5 \\"'\n'
+            '\t\t'r"\hline"'\n'
             '\t\t'r"6 & 7 & 8 & 9 & 1 \\"'\n'
-            '\t\t'r"\hline\hline"'\n'
+            '\t\t'r"\hline"'\n'
             '\t'r"\end{tabular}"'\n'
             r"\end{table}"'\n'
             r"\end{document}"'\n'

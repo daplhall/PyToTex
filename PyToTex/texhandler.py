@@ -19,6 +19,7 @@ class TexHandler():
     """
 
     def __init__(self, texdir:str = None, colmnOptions:dict = {}):
+        """TODO I should check if there is an option in colm options that is not supposed to be there"""
         if texdir:
             self._texdir = texdir
         else:
@@ -29,7 +30,8 @@ class TexHandler():
         self.deci = colmnOptions["decimals"] if "decimals" in colmnOptions else r"2"
         self.headersep = colmnOptions["headerSeperator"] if "headerSeperator" in colmnOptions else r'\hline\hline'
         self.rowsep = colmnOptions["rowSeperator"] if "rowSeperator" in colmnOptions else r'\hline'
-
+        self.colmsep = '' if 'colmSeperator' in colmnOptions and colmnOptions["colmSeperator"] == False else '|'
+        print("")
 
     
     def __enter__(self):
@@ -91,7 +93,7 @@ class TexHandler():
             '\t'r"\begin{tabular}{"
         )
         for j in range(M):
-            self._mainhandler.write("c|" if j != M - 1 else r"c}"'\n')
+            self._mainhandler.write("c"+self.colmsep if j != M - 1 else r"c}"'\n')
         ## TODO HEADER
         if (isinstance(header, Index) and not header.empty) or header:
             self._mainhandler.write("\t\t")
