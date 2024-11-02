@@ -408,6 +408,7 @@ class TestWriteTable(unittest.TestCase):
         self.assertEqual(f, answer)
         
     def test_TableFromDictException(self):
+        """Testing that that we catch the valueerror from pandas conversion"""
         data = {
             "A": [1,1,1,1,1],
             "B": [2,2,2,2,2],
@@ -419,5 +420,33 @@ class TestWriteTable(unittest.TestCase):
         with self.assertRaises(ValueError):
             with TexHandler('./tests/Tex') as th:
                 th.write_table(data)
+
+    def test_TableOptions(self):
+        """
+            testing the table options 
+        """
+        list = [
+            [1.123123,2,3,4,5],
+            [6,7,8,9,1]
+        ]
+        with TexHandler('./tests/Tex', colmnOptions={"headerSeperator": r"\hline\hline\hline", "rowSeperator": r"\hline\hline", 'decimals': 4}) as th:
+            th.write_table(list)
+        f = open('./tests/Tex/main.tex','r').read()
+        answer = (
+            r"\documentclass{article}"'\n'
+            r"\begin{document}"'\n'
+            r"\begin{table}[h]"'\n'
+            '\t'r"\centering"'\n'
+            '\t'r"\begin{tabular}{c|c|c|c|c}"'\n'
+            '\t\t'r"\hline\hline\hline"'\n'
+            '\t\t'r"1.1231 & 2 & 3 & 4 & 5 \\"'\n'
+            '\t\t'r"\hline\hline"'\n'
+            '\t\t'r"6 & 7 & 8 & 9 & 1 \\"'\n'
+            '\t\t'r"\hline\hline"'\n'
+            '\t'r"\end{tabular}"'\n'
+            r"\end{table}"'\n'
+            r"\end{document}"'\n'
+        )
+        self.assertEqual(f, answer)
 if __name__ == '__main__':
     unittest.main()

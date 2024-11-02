@@ -18,7 +18,7 @@ class TexHandler():
             __exit__() -> finishes the main file and closes all files that the handler handles
     """
 
-    def __init__(self, texdir:str = None):
+    def __init__(self, texdir:str = None, colmnOptions:dict = {}):
         if texdir:
             self._texdir = texdir
         else:
@@ -26,6 +26,11 @@ class TexHandler():
         if not os.path.exists(self._texdir):
             os.mkdir(self._texdir)
         self._filehandlers = []
+        self.deci = colmnOptions["decimals"] if "decimals" in colmnOptions else r"2"
+        self.headersep = colmnOptions["headerSeperator"] if "headerSeperator" in colmnOptions else r'\hline\hline'
+        self.rowsep = colmnOptions["rowSeperator"] if "rowSeperator" in colmnOptions else r'\hline'
+
+
     
     def __enter__(self):
         ## This could be split into a sub folder, one where you write it as a class to be compiled and one where you just write a tex file with out begin document and such
@@ -92,16 +97,16 @@ class TexHandler():
             self._mainhandler.write("\t\t")
             for j, colmn in enumerate(header):
                 self._mainhandler.write(colmn + " & " if j != K-1 else colmn+r" \\"'\n')
-        self._mainhandler.write("\t\t"r"\hline\hline"'\n')
+        self._mainhandler.write("\t\t"f"{self.headersep}"'\n')
         for row in data:
             K = len(row)
             self._mainhandler.write("\t\t")
             for j, element in enumerate(row):
-                self._mainhandler.write(f"{element:.0f}" if element%1 == 0 else f"{element:.2f}") # TODO this might need to be an option such that if you want .2 decimals on all numbers then you should have the option
+                self._mainhandler.write(f"{element:.0f}" if element%1 == 0 else f"{element:.{self.deci}f}") # TODO this might need to be an option such that if you want .2 decimals on all numbers then you should have the option
                 self._mainhandler.write(" & " if j != K - 1 else '')
                 if j == K-1:
                     self._mainhandler.write(r" \\"'\n')
-            self._mainhandler.write("\t\t"r"\hline"'\n')  
+            self._mainhandler.write("\t\t"f"{self.rowsep}"'\n')  
         self._mainhandler.write(
             '\t'r"\end{tabular}"'\n'
             r"\end{table}"'\n'
