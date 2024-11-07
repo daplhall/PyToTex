@@ -38,6 +38,7 @@ class TestFilehandler(unittest.TestCase):
         f = open('./tests/Tex/main.tex','r').read()
         answer = (
             r"\documentclass{article}"'\n'
+            r"\usepackage{graphicx}"'\n'
             r"\begin{document}"'\n'
             r"\input{test.tex}"'\n'
             r"\end{document}"'\n'

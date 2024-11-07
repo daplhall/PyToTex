@@ -1,6 +1,3 @@
-import sys
-sys.path.append("./PyToTex")
-
 import unittest
 import numpy as np
 import pandas as pd
@@ -22,6 +19,7 @@ class TestWriteTable(unittest.TestCase):
         f = open('./tests/Tex/main.tex','r').read()
         answer = (
             r"\documentclass{article}"'\n'
+            r"\usepackage{graphicx}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -50,6 +48,7 @@ class TestWriteTable(unittest.TestCase):
         f = open('./tests/Tex/main.tex','r').read()
         answer = (
             r"\documentclass{article}"'\n'
+            r"\usepackage{graphicx}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -78,6 +77,7 @@ class TestWriteTable(unittest.TestCase):
         f = open('./tests/Tex/main.tex','r').read()
         answer = (
             r"\documentclass{article}"'\n'
+            r"\usepackage{graphicx}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -106,6 +106,7 @@ class TestWriteTable(unittest.TestCase):
         f = open('./tests/Tex/main.tex','r').read()
         answer = (
             r"\documentclass{article}"'\n'
+            r"\usepackage{graphicx}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -134,6 +135,7 @@ class TestWriteTable(unittest.TestCase):
         f = open('./tests/Tex/main.tex','r').read()
         answer = (
             r"\documentclass{article}"'\n'
+            r"\usepackage{graphicx}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'\
             '\t'r"\centering"'\n'
@@ -178,6 +180,7 @@ class TestWriteTable(unittest.TestCase):
         f = open('./tests/Tex/main.tex','r').read()
         answer = (
             r"\documentclass{article}"'\n'
+            r"\usepackage{graphicx}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -235,6 +238,7 @@ class TestWriteTable(unittest.TestCase):
         f = open('./tests/Tex/main.tex','r').read()
         answer = (
             r"\documentclass{article}"'\n'
+            r"\usepackage{graphicx}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -258,6 +262,7 @@ class TestWriteTable(unittest.TestCase):
         f = open('./tests/Tex/main.tex','r').read()
         answer = (
             r"\documentclass{article}"'\n'
+            r"\usepackage{graphicx}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -292,6 +297,7 @@ class TestWriteTable(unittest.TestCase):
         f = open('./tests/Tex/main.tex','r').read()
         answer = (
             r"\documentclass{article}"'\n'
+            r"\usepackage{graphicx}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -320,6 +326,7 @@ class TestWriteTable(unittest.TestCase):
         f = open('./tests/Tex/main.tex','r').read()
         answer = (
             r"\documentclass{article}"'\n'
+            r"\usepackage{graphicx}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -349,6 +356,7 @@ class TestWriteTable(unittest.TestCase):
         f = open('./tests/Tex/main.tex','r').read()
         answer = (
             r"\documentclass{article}"'\n'
+            r"\usepackage{graphicx}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -385,6 +393,7 @@ class TestWriteTable(unittest.TestCase):
         f = open('./tests/Tex/main.tex','r').read()
         answer = (
             r"\documentclass{article}"'\n'
+            r"\usepackage{graphicx}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -441,6 +450,7 @@ class TestWriteTable(unittest.TestCase):
         f = open('./tests/Tex/main.tex','r').read()
         answer = (
             r"\documentclass{article}"'\n'
+            r"\usepackage{graphicx}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -473,6 +483,7 @@ class TestWriteTable(unittest.TestCase):
         f = open('./tests/Tex/main.tex','r').read()
         answer = (
             r"\documentclass{article}"'\n'
+            r"\usepackage{graphicx}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -526,6 +537,7 @@ class TestWriteTable(unittest.TestCase):
         f = open('./tests/Tex/main.tex','r').read()
         answer = (
             r"\documentclass{article}"'\n'
+            r"\usepackage{graphicx}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'

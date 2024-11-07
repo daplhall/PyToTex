@@ -31,15 +31,22 @@ class TexHandler():
         self.headersep = colmnOptions["headerSeperator"] if "headerSeperator" in colmnOptions else r'\hline\hline'
         self.rowsep = colmnOptions["rowSeperator"] if "rowSeperator" in colmnOptions else r'\hline'
         self.colmsep = '' if 'colmSeperator' in colmnOptions and colmnOptions["colmSeperator"] == False else '|'
+        self._plotdir = texdir + '/plots'
+        if not os.path.exists(self._plotdir):
+            os.mkdir(self._plotdir)
+        self._figcount = 0
 
     
     def __enter__(self):
         ## This could be split into a sub folder, one where you write it as a class to be compiled and one where you just write a tex file with out begin document and such
         maintex = open(os.path.abspath(self._texdir + "/main.tex"),'w')
-        self._currentFile = maintex
-        self._mainhandler = maintex
+        self._mainhandler = self._currentFile = maintex
         self._mainhandler.write(
             r"\documentclass{article}"'\n'
+        )
+        # TODO be handled by with_packages
+        self._mainhandler.write(
+            r"\usepackage{graphicx}"'\n'
         )
         ## TODO write packages
         self._mainhandler.write(
@@ -114,8 +121,21 @@ class TexHandler():
             r"\end{table}"'\n'
         )
 
-    def write_plot(self, fig:plt.figure, file = None):
+    def set_plotdir(self, dir:str):
+        """dir is relative to texdir"""
         pass
+
+    def write_plot(self, fig:plt.figure, file = None):
+        figureDir = self._plotdir + f'/plot_{self._figcount}.png'
+        fig.savefig(figureDir)
+        self._figcount += 1
+        self._currentFile.write(
+            r"\begin{figure}[h]"'\n'
+            r"\centering"'\n'
+            "\t\t"r"\includegraphics[width=0.6\textwidth]"f"{{{figureDir}}}"'\n'
+            r"\end{figure}"'\n'
+        )
+
 
     def set_file(self, file:str):
         """
@@ -140,3 +160,6 @@ class TexHandler():
     def close_file(self, file):
         """should close a file an pop it from file handlers"""
         pass
+    
+    def write_section(self, title):
+        self._currentFile.write(r"\section"f"{{{title}}}\n")
