@@ -20,6 +20,7 @@ class TestWriteTable(unittest.TestCase):
         answer = (
             r"\documentclass{article}"'\n'
             r"\usepackage{graphicx}"'\n'
+            r"\usepackage{rotating}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -49,6 +50,7 @@ class TestWriteTable(unittest.TestCase):
         answer = (
             r"\documentclass{article}"'\n'
             r"\usepackage{graphicx}"'\n'
+            r"\usepackage{rotating}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -78,6 +80,7 @@ class TestWriteTable(unittest.TestCase):
         answer = (
             r"\documentclass{article}"'\n'
             r"\usepackage{graphicx}"'\n'
+            r"\usepackage{rotating}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -107,6 +110,7 @@ class TestWriteTable(unittest.TestCase):
         answer = (
             r"\documentclass{article}"'\n'
             r"\usepackage{graphicx}"'\n'
+            r"\usepackage{rotating}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -136,6 +140,7 @@ class TestWriteTable(unittest.TestCase):
         answer = (
             r"\documentclass{article}"'\n'
             r"\usepackage{graphicx}"'\n'
+            r"\usepackage{rotating}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'\
             '\t'r"\centering"'\n'
@@ -181,6 +186,7 @@ class TestWriteTable(unittest.TestCase):
         answer = (
             r"\documentclass{article}"'\n'
             r"\usepackage{graphicx}"'\n'
+            r"\usepackage{rotating}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -239,6 +245,7 @@ class TestWriteTable(unittest.TestCase):
         answer = (
             r"\documentclass{article}"'\n'
             r"\usepackage{graphicx}"'\n'
+            r"\usepackage{rotating}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -263,6 +270,7 @@ class TestWriteTable(unittest.TestCase):
         answer = (
             r"\documentclass{article}"'\n'
             r"\usepackage{graphicx}"'\n'
+            r"\usepackage{rotating}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -298,6 +306,7 @@ class TestWriteTable(unittest.TestCase):
         answer = (
             r"\documentclass{article}"'\n'
             r"\usepackage{graphicx}"'\n'
+            r"\usepackage{rotating}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -327,6 +336,7 @@ class TestWriteTable(unittest.TestCase):
         answer = (
             r"\documentclass{article}"'\n'
             r"\usepackage{graphicx}"'\n'
+            r"\usepackage{rotating}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -357,6 +367,7 @@ class TestWriteTable(unittest.TestCase):
         answer = (
             r"\documentclass{article}"'\n'
             r"\usepackage{graphicx}"'\n'
+            r"\usepackage{rotating}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -394,6 +405,7 @@ class TestWriteTable(unittest.TestCase):
         answer = (
             r"\documentclass{article}"'\n'
             r"\usepackage{graphicx}"'\n'
+            r"\usepackage{rotating}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -451,6 +463,7 @@ class TestWriteTable(unittest.TestCase):
         answer = (
             r"\documentclass{article}"'\n'
             r"\usepackage{graphicx}"'\n'
+            r"\usepackage{rotating}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -484,6 +497,7 @@ class TestWriteTable(unittest.TestCase):
         answer = (
             r"\documentclass{article}"'\n'
             r"\usepackage{graphicx}"'\n'
+            r"\usepackage{rotating}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -538,6 +552,7 @@ class TestWriteTable(unittest.TestCase):
         answer = (
             r"\documentclass{article}"'\n'
             r"\usepackage{graphicx}"'\n'
+            r"\usepackage{rotating}"'\n'
             r"\begin{document}"'\n'
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
@@ -552,5 +567,38 @@ class TestWriteTable(unittest.TestCase):
             r"\end{document}"'\n'
         )
         self.assertEqual(f, answer)
+
+    def test_TableRotate(self):
+        """
+            tests if we can write a table from python list
+        """
+        with TexHandler('./tests/Tex') as th:
+            list = [
+                [1,2,3,4,5],
+                [6,7,8,9,1]
+            ]
+            th.write_table(list, rotate = 90) 
+        f = open('./tests/Tex/main.tex','r').read()
+        answer = (
+            r"\documentclass{article}"'\n'
+            r"\usepackage{graphicx}"'\n'
+            r"\usepackage{rotating}"'\n'
+            r"\begin{document}"'\n'
+            r"\begin{table}[h]"'\n'
+            '\t'r"\centering"'\n'
+            '\t'r"\rotatebox{90}{"'\n'
+            '\t'r"\begin{tabular}{c|c|c|c|c}"'\n'
+            '\t\t'r"\hline\hline"'\n'
+            '\t\t'r"1 & 2 & 3 & 4 & 5 \\"'\n'
+            '\t\t'r"\hline"'\n'
+            '\t\t'r"6 & 7 & 8 & 9 & 1 \\"'\n'
+            '\t\t'r"\hline"'\n'
+            '\t'r"\end{tabular}"'\n'
+            '\t}\n'
+            r"\end{table}"'\n'
+            r"\end{document}"'\n'
+        )
+        self.assertEqual(f, answer)
+
 if __name__ == '__main__':
     unittest.main()
