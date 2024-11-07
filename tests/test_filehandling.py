@@ -40,6 +40,7 @@ class TestFilehandler(unittest.TestCase):
             r"\documentclass{article}"'\n'
             r"\usepackage{graphicx}"'\n'
             r"\usepackage{rotating}"'\n'
+            r"\usepackage[margin=25mm]{geometry}"'\n'            
             r"\begin{document}"'\n'
             r"\input{test.tex}"'\n'
             r"\end{document}"'\n'
