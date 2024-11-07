@@ -48,6 +48,7 @@ class TexHandler():
         self._mainhandler.write(
             r"\usepackage{graphicx}"'\n'
             r"\usepackage{rotating}"'\n'
+            r"\usepackage[margin=25mm]{geometry}"'\n'
         )
         ## TODO write packages
         self._mainhandler.write(
