@@ -47,6 +47,7 @@ class TexHandler():
         # TODO be handled by with_packages
         self._mainhandler.write(
             r"\usepackage{graphicx}"'\n'
+            r"\usepackage{rotating}"'\n'
         )
         ## TODO write packages
         self._mainhandler.write(
@@ -69,7 +70,7 @@ class TexHandler():
     def with_packages(cls, file):
         pass
     
-    def write_table(self, data, file = None):
+    def write_table(self, data, file = None, rotate = None):
         """
         we assume that 1d numpy arrays are a row
         """ 
@@ -97,8 +98,9 @@ class TexHandler():
         self._currentFile.write(
             r"\begin{table}[h]"'\n'
             '\t'r"\centering"'\n'
-            '\t'r"\begin{tabular}{"
         )
+        self._currentFile.write('\t'r"\rotatebox"f"{{{rotate}}}""{\n" if rotate else '')
+        self._currentFile.write('\t'r"\begin{tabular}{")
         for j in range(M):
             self._currentFile.write("c"+self.colmsep if j != M - 1 else r"c}"'\n')
         ## TODO HEADER
@@ -118,8 +120,9 @@ class TexHandler():
             self._currentFile.write("\t\t"f"{self.rowsep}"'\n')  
         self._currentFile.write(
             '\t'r"\end{tabular}"'\n'
-            r"\end{table}"'\n'
         )
+        self._currentFile.write('\t'r"}"'\n' if rotate else '')
+        self._currentFile.write(r"\end{table}"'\n')
 
     def set_plotdir(self, dir:str):
         """dir is relative to texdir"""

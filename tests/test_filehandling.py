@@ -39,6 +39,7 @@ class TestFilehandler(unittest.TestCase):
         answer = (
             r"\documentclass{article}"'\n'
             r"\usepackage{graphicx}"'\n'
+            r"\usepackage{rotating}"'\n'
             r"\begin{document}"'\n'
             r"\input{test.tex}"'\n'
             r"\end{document}"'\n'
